@@ -1,38 +1,29 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
+import { ref } from 'vue'
 
-export const useCitiesStore = defineStore('tree', () => {
-    const city = reactive({
-        id: null,
-        name: null,
-        citizensAmount: null
-    })
+export const useUsersStore = defineStore('users', () => {
+    const user = ref(null)
 
     /**
-     * Запрашивает информацию о городе у API и устанавливает его в сторе
+     * Запрашивает информацию о пользователе у API и сохраняет
+     * его в сторе
      *
-     * @param { number } city_id
+     * @param { number } user_id
      */
-    async function getCity(city_id) {
-        fetch('/city/' + city_id)
+    function getUser(user_id) {
+        fetch('/users/' + user_id)
             .then((response) => response.json())
             .then((data) => {
-                city.id = city_id
-                city.name = data.name
-                city.citizensAmount = data.citizensAmount
+                user.value = data
             })
             .catch(() => {
-                city.id = null
-                city.name = null
-                city.citizensAmount = null
+                user.value = null
             })
     }
 
-    async function closeCity() {
-        city.id = null
-        city.name = null
-        city.citizensAmount = null
+    function closeUser() {
+        user.value = null
     }
 
-    return { user, getCity, closeCity }
+    return { user, getUser, closeUser }
 })

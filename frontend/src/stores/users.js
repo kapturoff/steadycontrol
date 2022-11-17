@@ -11,7 +11,7 @@ export const useUsersStore = defineStore('users', () => {
      * @param { number } user_id
      */
     function getUser(user_id) {
-        fetch('/users/' + user_id)
+        fetch('/api/users/' + user_id)
             .then((response) => response.json())
             .then((data) => {
                 user.value = data

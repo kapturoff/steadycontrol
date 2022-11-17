@@ -3,8 +3,13 @@ import Tree from '../components/Tree.vue'
 
 const routes = [
     {
-        path: '/:id',
+        path: '/',
         component: Tree
+    },
+    {
+        path: '/:id',
+        component: Tree,
+        props: true
     }
 ]
 

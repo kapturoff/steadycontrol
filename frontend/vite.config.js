@@ -16,7 +16,10 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '/tree': 'http://localhost:8080/tree/'
+            '/api': {
+                target: 'http://localhost:8080',
+                rewrite: (path) => path.replace(/^\/api/, '')
+            }
         }
     }
 })

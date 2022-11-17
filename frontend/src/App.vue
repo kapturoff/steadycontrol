@@ -12,6 +12,5 @@ treeStore.getTree()
 
 <template>
     <Breadcrumb :items="items" />
-    <!-- <Tree :items="items" /> -->
     <router-view />
 </template>

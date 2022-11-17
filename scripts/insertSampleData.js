@@ -1,5 +1,6 @@
 const { Database } = require('better-sqlite3'),
-    data = require('./citizens.json'),
+    citizens = require('./citizens.json'),
+    cities = require('./cities.json'),
     { db } = require('../server/database')
 
 const GROUP_TYPES = {
@@ -15,7 +16,20 @@ const GROUP_TYPES = {
  * @param { Database } db
  */
 function insertSampleData(db) {
-    for (const sampleUser of data) {
+    // Добавляет города
+
+    for (const city of cities) {
+        db.prepare(
+            'insert into cities (name, citizens_amount) values (@name, @citizens_amount)'
+        ).run({
+            name: city.name,
+            citizens_amount: Number(city.data)
+        })
+    }
+
+    // Добавляет пользователей
+
+    for (const sampleUser of citizens) {
         /**
          * Создаем пользователя.
          *

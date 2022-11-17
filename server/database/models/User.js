@@ -2,8 +2,32 @@ const { Database } = require('better-sqlite3'),
     UserGroup = require('./UserGroup'),
     Group = require('./Group')
 
+const SELECT_USER_BY_ID_SQL = `
+SELECT 
+    u.id as id,
+    u.name as name,
+    c.id as city_id,
+    c.name as city_name,
+    c.citizens_amount as city_citizens_amount
+FROM users u
+LEFT JOIN cities c on c.id = u.city_id
+WHERE u.id = ?
+`
+
+const SELECT_ALL_USERS_SQL = `
+SELECT 
+    u.id as id,
+    u.name as name,
+    c.id as city_id,
+    c.name as city_name,
+    c.citizens_amount as city_citizens_amount
+FROM users u
+LEFT JOIN cities c on c.id = u.city_id
+`
+
+
 class User {
-    constructor(db, { name, city_id, groups }) {
+    constructor({ name, city_id, groups }) {
         Object.assign(this, { name, city_id, groups })
     }
 
@@ -41,7 +65,7 @@ class User {
      * @returns { User[] } Список пользователей
      */
     static findAll(db) {
-        const query = db.prepare('SELECT id, name, city_id FROM users')
+        const query = db.prepare(SELECT_ALL_USERS_SQL)
 
         const users = query.all().map((user) => ({
             ...user,
@@ -59,9 +83,7 @@ class User {
      * @returns { User } Найденного пользователя
      */
     static findOne(db, user_id) {
-        const user = db
-            .prepare('SELECT id, name, city_id FROM users where id = ?')
-            .get(user_id)
+        const user = db.prepare(SELECT_USER_BY_ID_SQL).get(user_id)
 
         if (!user) return null
 

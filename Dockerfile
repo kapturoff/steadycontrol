@@ -24,7 +24,6 @@ RUN npm run build
 
 WORKDIR /project/
 
-COPY entrypoint.sh /project
 COPY scripts /project/scripts/
 
 RUN ["npm", "run", "initdb"]

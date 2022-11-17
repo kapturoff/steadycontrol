@@ -12,14 +12,14 @@ export default defineConfig({
         }
     },
     build: {
-        outDir: '../server/static'
+        outDir: '../server/static',
     },
     server: {
-        proxy: {
-            '/api': {
-                target: 'http://localhost:8080',
-                rewrite: (path) => path.replace(/^\/api/, '')
-            }
-        }
+        // proxy: {
+        //     '/api': {
+        //         target: 'http://localhost:8080',
+        //         rewrite: (path) => path.replace(/^\/api/, '')
+        //     }
+        // }
     }
 })

@@ -95,8 +95,6 @@ function insertSampleData(db) {
              * самостоятельно
              */
 
-            console.log(foundGroup)
-
             if (foundGroup.type === 0) {
                 const cityName = CITY_NAMES[foundGroup.name],
                     cityId = db

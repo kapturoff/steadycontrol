@@ -9,7 +9,7 @@ export const useTreeStore = defineStore('tree', () => {
      * Запрашивает у API информацию о древе и сохраняет ее в сторе
      */
     function getTree() {
-        fetch('/api/tree')
+        fetch('/tree')
             .then((response) => response.json())
             .then((data) => {
                 for (const item of data) {

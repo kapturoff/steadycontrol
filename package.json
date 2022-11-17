@@ -1,15 +1,14 @@
 {
     "name": "test-task",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "version": "0.9.0",
+    "description": "Приложение, показывающее иерархию пользователей в виде древовидной структуры",
+    "main": "server/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "initdb": "node scripts/initDatabase.js",
         "devdata": "node scripts/insertSampleData.js"
     },
-    "keywords": [],
-    "author": "",
+    "author": "kapturoff",
     "license": "ISC",
     "dependencies": {
         "@koa/router": "^12.0.0",

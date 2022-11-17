@@ -10,6 +10,12 @@ const GROUP_TYPES = {
     unknown: 999
 }
 
+const CITY_NAMES = {
+    'Москва г.': 'Москва',
+    'Санкт-Петербург г.': 'Санкт-Петербург',
+    'Воронеж г.': 'Воронеж'
+}
+
 /**
  * Добавляет в базу данные, полученные с тестовым заданием
  *
@@ -53,7 +59,7 @@ function insertSampleData(db) {
 
             let foundGroup = db
                 .prepare(
-                    'select id from groups where type = @type AND name = @name'
+                    'select id, type, name from groups where type = @type AND name = @name'
                 )
                 .get(group)
 
@@ -69,7 +75,7 @@ function insertSampleData(db) {
 
                 foundGroup = db
                     .prepare(
-                        'select id from groups where type = @type AND name = @name'
+                        'select id, type, name from groups where type = @type AND name = @name'
                     )
                     .get(newGroup)
             }
@@ -82,6 +88,25 @@ function insertSampleData(db) {
                 user_id,
                 group_id: foundGroup.id
             })
+
+            /**
+             * В тестовых данных спутаны city_id у пользователей, поэтому придется
+             * брать названия городов из группы и привязывать их к пользователям
+             * самостоятельно
+             */
+
+            console.log(foundGroup)
+
+            if (foundGroup.type === 0) {
+                const cityName = CITY_NAMES[foundGroup.name],
+                    cityId = db
+                        .prepare('select id from cities where name = ?')
+                        .get(cityName)?.id
+
+                db.prepare(
+                    'update users set city_id = @city_id where id = @user_id'
+                ).run({ city_id: cityId, user_id })
+            }
         }
     }
 }

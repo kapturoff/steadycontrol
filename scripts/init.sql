@@ -8,8 +8,7 @@ create table if not exists cities (
 create table if not exists users (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     name TEXT, 
-    city_id INTEGER,
-    FOREIGN KEY(city_id) REFERENCES cities(id)
+    city_id INTEGER
 );
 
 create table if not exists groups (
